@@ -6,8 +6,8 @@ services:
     buildCommand: "npm install"
     startCommand: "node index.js"
     envVars:
-      - key: GEMINI_API_KEY
-        fromSecret: true # Indicates it's a secret value set in Render's dashboard
+      - key: GEMINI_API_KEY # Value will be set securely in the Render Dashboard
+        # value: SOME_DEFAULT_VALUE # Optional: Set a default/dev value here if needed
       - key: NODE_VERSION # Optional: Specify Node version if needed
         value: 18 # Or your preferred Node version supported by Render
       # Add other environment variables if needed
