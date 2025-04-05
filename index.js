@@ -49,9 +49,11 @@ const client = new Client({
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--single-process', // <- Doesn't work on Windows
+            //'--single-process', // Sometimes causes issues, try disabling
             '--disable-gpu'
         ],
+        timeout: 60000, // Increase timeout to 60 seconds (default is 30000ms)
+        // executablePath: '/path/to/your/chrome', // Uncomment and set if you have a specific Chrome/Chromium
     }
 });
 

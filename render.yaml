@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: whatsapp-moderator
+    env: node
+    plan: free # Or your desired plan
+    buildCommand: "npm install"
+    startCommand: "node index.js"
+    envVars:
+      - key: GEMINI_API_KEY
+        fromSecret: true # Indicates it's a secret value set in Render's dashboard
+      - key: NODE_VERSION # Optional: Specify Node version if needed
+        value: 18 # Or your preferred Node version supported by Render
+      # Add other environment variables if needed
+
+# Optional: Define databases, background workers, etc.
+# databases:
+#   - name: my-database
+#     plan: free 
