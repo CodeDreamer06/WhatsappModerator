@@ -7,10 +7,7 @@ services:
     startCommand: "node index.js"
     envVars:
       - key: GEMINI_API_KEY # Value will be set securely in the Render Dashboard
-        # value: SOME_DEFAULT_VALUE # Optional: Set a default/dev value here if needed
-      - key: NODE_VERSION # Optional: Specify Node version if needed
-        value: 18 # Or your preferred Node version supported by Render
-      # Add other environment variables if needed
+        # Note: Ensure this key matches exactly what you set in Render's UI.
 
 # Optional: Define databases, background workers, etc.
 # databases:
