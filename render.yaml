@@ -1,5 +1,5 @@
 services:
-  - type: web
+  - type: worker
     name: whatsapp-moderator
     env: node
     plan: free # Or your desired plan
