@@ -3,11 +3,21 @@ require('dotenv').config();
 
 // --- Configuration ---
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+let genAI;
+let model;
+
 if (!GEMINI_API_KEY) {
-    console.error("Error: GEMINI_API_KEY not found in .env file.");
-    console.error("Please create a .env file in the root directory and add your Gemini API key.");
-    console.error("Example: GEMINI_API_KEY=YOUR_ACTUAL_API_KEY");
-    process.exit(1);
+    console.warn("-------------------------------------------------------------------------");
+    console.warn("Warning: GEMINI_API_KEY not found in environment variables.");
+    console.warn("The application will start, but moderation will FAIL until the key is set.");
+    console.warn("Please set the GEMINI_API_KEY in your Render dashboard environment settings.");
+    console.warn("-------------------------------------------------------------------------");
+    // Don't exit, allow the app to start so the key can be added in Render UI.
+    // process.exit(1); // Removed this line
+} else {
+    // Initialize Gemini only if the key exists
+    genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+    model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 }
 
 // --- IMPORTANT: Customize this prompt! ---
@@ -28,10 +38,13 @@ Based ONLY on the rules and the message content, answer with ONE word: 'DELETE' 
 `;
 // ------
 
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"}); // Use flash for speed and cost
-
 async function shouldDeleteMessage(messageContent) {
+    // Add a check here to prevent errors if the model wasn't initialized
+    if (!model) {
+        console.error("Moderation check skipped: Gemini client not initialized (API key likely missing).");
+        return false; // Fail safe (keep message)
+    }
+
     if (!messageContent || typeof messageContent !== 'string') {
         console.warn("Moderation check skipped: Invalid message content.");
         return false;
