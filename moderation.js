@@ -17,7 +17,7 @@ if (!GEMINI_API_KEY) {
 } else {
     // Initialize Gemini only if the key exists
     genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-    model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 }
 
 // --- IMPORTANT: Customize this prompt! ---
